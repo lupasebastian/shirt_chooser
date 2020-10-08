@@ -1,5 +1,13 @@
+"""
+Application designed to help undecided people choose what kind of shirt they can
+wear.
+If they don't have those kid of shirts they can always draw marks and texts :-)
+Next releases will implement defining user's own wardrobe to choose from.
+"""
 from random import choice
-from shirt_builders import *
+from shirt_builders import ColouredShirtWithMarkAndTextBuilder, \
+    ColouredShirtWithTextBuilder, ColouredShirtBuilder, \
+    ColouredShirtWithMarkBuilder
 
 MONDAY_CHOICES = [['zieloną', 'niebieską', 'żółtą'],
                   ['słońcem', 'koniem', 'psem'],
@@ -27,16 +35,21 @@ POLISH_DAYS = ('poniedziałek', 'wtorek', 'środa',
 
 
 def __get_final_input():
+    """
+    Gets input from a user using other methods
+    then formats it so appropriate builders can use it.
+    """
     day = __get_day()
-    mark = __get_mark()
-    text = __get_text()
-    color = __get_random_color(day)
-    mark = __get_random_mark(day) if mark else None
-    text = __get_random_text(day) if text else None
-    return color, mark, text
+    final_mark = __get_mark()
+    final_text = __get_text()
+    final_color = __get_random_color(day)
+    final_mark = __get_random_mark(day) if final_mark else None
+    final_text = __get_random_text(day) if final_text else None
+    return final_color, final_mark, final_text
 
 
 def __get_day() -> str:
+    """Gets the day of the week from a user."""
     while True:
         day = input('Jaki jest dzień tygodnia? ').casefold()
         if day in POLISH_DAYS:
@@ -46,6 +59,7 @@ def __get_day() -> str:
 
 
 def __get_mark() -> bool:
+    """Gets user's decision whether they want a mark on a shirt"""
     while True:
         mark = input('Czy chcesz koszulkę z nadrukiem? \n'
                      'Wpisz Tak lub Nie: ').casefold()
@@ -56,6 +70,7 @@ def __get_mark() -> bool:
 
 
 def __get_text() -> bool:
+    """Gets user's decision whether they want a text on their shirt"""
     while True:
         text = input('Czy chcesz koszulkę z napisem? \n'
                      'Wpisz Tak lub Nie: ').casefold()
@@ -66,75 +81,81 @@ def __get_text() -> bool:
 
 
 def __get_random_color(day: str) -> str:
-    if day == 'monday':
-        return choice(MONDAY_CHOICES[0])
-    elif day == 'tuesday':
-        return choice(TUESDAY_CHOICES[0])
-    elif day == 'wednesday':
-        return choice(WEDNESDAY_CHOICES[0])
-    elif day == 'thursday':
-        return choice(THURSDAY_CHOICES[0])
-    elif day == 'friday':
-        return choice(FRIDAY_CHOICES[0])
-    elif day == 'saturday':
-        return choice(SATURDAY_CHOICES[0])
+    """Basing on a day chooses shirt's color from available ones"""
+    if day == 'poniedziałek':
+        result = choice(MONDAY_CHOICES[0])
+    elif day == 'wtorek':
+        result = choice(TUESDAY_CHOICES[0])
+    elif day == 'środa':
+        result = choice(WEDNESDAY_CHOICES[0])
+    elif day == 'czwartek':
+        result = choice(THURSDAY_CHOICES[0])
+    elif day == 'piątek':
+        result = choice(FRIDAY_CHOICES[0])
+    elif day == 'sobota':
+        result = choice(SATURDAY_CHOICES[0])
     else:
-        return choice(SUNDAY_CHOICES[0])
+        result = choice(SUNDAY_CHOICES[0])
+    return result
 
 
 def __get_random_mark(day: str) -> str:
-    if day == 'monday':
-        return choice(MONDAY_CHOICES[1])
-    elif day == 'tuesday':
-        return choice(TUESDAY_CHOICES[1])
-    elif day == 'wednesday':
-        return choice(WEDNESDAY_CHOICES[1])
-    elif day == 'thursday':
-        return choice(THURSDAY_CHOICES[1])
-    elif day == 'friday':
-        return choice(FRIDAY_CHOICES[1])
-    elif day == 'saturday':
-        return choice(SATURDAY_CHOICES[1])
+    """Basing on a day chooses mark from available ones"""
+    if day == 'poniedziałek':
+        result = choice(MONDAY_CHOICES[1])
+    elif day == 'wtorek':
+        result = choice(TUESDAY_CHOICES[1])
+    elif day == 'środa':
+        result = choice(WEDNESDAY_CHOICES[1])
+    elif day == 'czwartek':
+        result = choice(THURSDAY_CHOICES[1])
+    elif day == 'piątek':
+        result = choice(FRIDAY_CHOICES[1])
+    elif day == 'sobota':
+        result = choice(SATURDAY_CHOICES[1])
     else:
-        return choice(SUNDAY_CHOICES[1])
+        result = choice(SUNDAY_CHOICES[1])
+    return result
 
 
 def __get_random_text(day: str) -> str:
-    if day == 'monday':
-        return choice(MONDAY_CHOICES[2])
-    elif day == 'tuesday':
-        return choice(TUESDAY_CHOICES[2])
-    elif day == 'wednesday':
-        return choice(WEDNESDAY_CHOICES[2])
-    elif day == 'thursday':
-        return choice(THURSDAY_CHOICES[2])
-    elif day == 'friday':
-        return choice(FRIDAY_CHOICES[2])
-    elif day == 'saturday':
-        return choice(SATURDAY_CHOICES[2])
+    """Basing on a day chooses text from available ones"""
+    if day == 'poniedziałek':
+        result = choice(MONDAY_CHOICES[2])
+    elif day == 'wtorek':
+        result = choice(TUESDAY_CHOICES[2])
+    elif day == 'środa':
+        result = choice(WEDNESDAY_CHOICES[2])
+    elif day == 'czwartek':
+        result = choice(THURSDAY_CHOICES[2])
+    elif day == 'piatek':
+        result = choice(FRIDAY_CHOICES[2])
+    elif day == 'sobota':
+        result = choice(SATURDAY_CHOICES[2])
     else:
-        return choice(SUNDAY_CHOICES[2])
+        result = choice(SUNDAY_CHOICES[2])
+    return result
 
 
 if __name__ == '__main__':
     while True:
         print('Witaj, na podstawie podanego dnia tygodnia '
               'wybierzemy dla Ciebie koszulkę: ')
-        color, mark, text = __get_final_input()
-        if color and mark and text:
-            builder = ColouredShirtWithMarkAndTextBuilder(color, mark, text)
+        builder_color, builder_mark, builder_text = __get_final_input()
+        if builder_color and builder_mark and builder_text:
+            builder = ColouredShirtWithMarkAndTextBuilder(builder_color, builder_mark, builder_text)
             builder.add_elements()
             print(builder.result.description)
-        elif color and mark:
-            builder = ColouredShirtWithMarkBuilder(color, mark)
+        elif builder_color and builder_mark:
+            builder = ColouredShirtWithMarkBuilder(builder_color, builder_mark)
             builder.add_elements()
             print(builder.result.description)
-        elif color and text:
-            builder = ColouredShirtWithTextBuilder(color, text)
+        elif builder_color and builder_text:
+            builder = ColouredShirtWithTextBuilder(builder_color, builder_text)
             builder.add_elements()
             print(builder.result.description)
         else:
-            builder = ColouredShirtBuilder(color)
+            builder = ColouredShirtBuilder(builder_color)
             builder.add_elements()
             print(builder.result.description)
         choice = input('Jeśli chcesz zakończyć wybierz 0, '

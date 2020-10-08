@@ -1,19 +1,24 @@
-from shirt_builders import *
-import pytest
+"""
+Tests for builders classes
+"""
+from shirt_builders import Shirt
 
 
 def test_can_instantiate_shirt(base_shirt):
-    assert type(base_shirt) is Shirt
+    """Tests if a product can be instantiated"""
+    assert isinstance(base_shirt, Shirt)
 
 
 def test_can_get_shirts_description(base_shirt):
+    """Tests if description property of a product can be accessed"""
     assert base_shirt.description == 'Zwykła biała koszulka'
 
 
-def test_can_change_description_by_building(base_shirt, coloured_shirt_builder,
+def test_can_change_description_by_building(coloured_shirt_builder,
                                             coloured_shirt_with_mark_builder,
                                             coloured_shirt_with_text_builder,
                                             coloured_shirt_with_mark_and_text_builder):
+    """Tests if description property can be changed by builders and the accessed"""
     coloured_shirt_builder.add_elements()
     coloured_shirt_with_mark_builder.add_elements()
     coloured_shirt_with_text_builder.add_elements()
