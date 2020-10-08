@@ -64,7 +64,7 @@ def __get_mark() -> bool:
         mark = input('Czy chcesz koszulkę z nadrukiem? \n'
                      'Wpisz Tak lub Nie: ').casefold()
         if mark in ('tak', 'nie'):
-            return True if mark == 'tak' else False
+            return mark == 'tak'
         else:
             print('Nieprawidłowy wybór')
 
@@ -75,7 +75,7 @@ def __get_text() -> bool:
         text = input('Czy chcesz koszulkę z napisem? \n'
                      'Wpisz Tak lub Nie: ').casefold()
         if text in ('tak', 'nie'):
-            return True if text == 'tak' else False
+            return text == 'tak'
         else:
             print('Nieprawidłowy wybór')
 
