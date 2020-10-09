@@ -18,7 +18,7 @@ def test_can_change_description_by_building(coloured_shirt_builder,
                                             coloured_shirt_with_mark_builder,
                                             coloured_shirt_with_text_builder,
                                             coloured_shirt_with_mark_and_text_builder):
-    """Tests if description property can be changed by builders and the accessed"""
+    """Tests if description property can be changed by builders and then accessed"""
     coloured_shirt_builder.add_elements()
     coloured_shirt_with_mark_builder.add_elements()
     coloured_shirt_with_text_builder.add_elements()

@@ -158,8 +158,8 @@ if __name__ == '__main__':
             builder = ColouredShirtBuilder(builder_color)
             builder.add_elements()
             print(builder.result.description)
-        choice = input('Jeśli chcesz zakończyć wybierz 0, '
-              'jeśli chcesz wybrać jeszcze raz - '
-              'wciśnij dowolny inny przycisk i zatwierdź wciskając ENTER: ')
-        if choice == '0':
+        choice_exit = input('Jeśli chcesz zakończyć wybierz 0, '
+                       'jeśli chcesz wybrać jeszcze raz - '
+                       'wciśnij dowolny inny przycisk i zatwierdź wciskając ENTER: ')
+        if choice_exit == '0':
             break
