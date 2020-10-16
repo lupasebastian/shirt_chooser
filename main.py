@@ -144,11 +144,16 @@ def prompt_for_exit():
     return choice_exit == '0'
 
 
-if __name__ == '__main__':
+def print_greeting():
+    """Greets user in application"""
     print('Witaj, na podstawie podanego dnia tygodnia '
           'wybierzemy dla Ciebie koszulkę: ')
+
+
+if __name__ == '__main__':
+    print_greeting()
     final_color_main, final_mark_main, final_text_main = __get_final_input()
-    pattern_random_selection = randint(1,2)
+    pattern_random_selection = randint(1, 2)
     if pattern_random_selection == 1:
         print('Używamy wzorca Builder :-)')
         while True:
@@ -174,6 +179,10 @@ if __name__ == '__main__':
                 print(builder.result.description)
             if prompt_for_exit():
                 break
+            else:
+                print_greeting()
+                final_color_main, final_mark_main, final_text_main = __get_final_input()
+
     else:
         print('Używamy wzorca Decorator :-)')
         while True:
@@ -197,3 +206,6 @@ if __name__ == '__main__':
                     print(final_shirt_with_mark.description)
             if prompt_for_exit():
                 break
+            else:
+                print_greeting()
+                final_color_main, final_mark_main, final_text_main = __get_final_input()
