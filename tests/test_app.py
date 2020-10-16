@@ -3,7 +3,7 @@ Module for testing the application's main file
 """
 from random import choice
 from unittest.mock import MagicMock
-from main import MONDAY_CHOICES, POLISH_DAYS, __get_random_color, \
+from main import MONDAY_CHOICES, POLISH_DAYS, get_random_color, \
     __get_random_mark, __get_random_text, WEDNESDAY_CHOICES
 
 
@@ -36,7 +36,7 @@ def test_can_get_text():
 def test_can_generate_random_color():
     """Tests if app can get a random color choice from appropriate list"""
     day = 'środa'
-    assert __get_random_color(day) in WEDNESDAY_CHOICES[0]
+    assert get_random_color(day) in WEDNESDAY_CHOICES[0]
 
 
 def test_can_generate_random_mark():

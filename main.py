@@ -1,13 +1,14 @@
 """
 Application designed to help undecided people choose what kind of shirt they can
 wear.
-If they don't have those kid of shirts they can always draw marks and texts :-)
+If they don't have those kind of shirts they can always draw marks and texts :-)
 Next releases will implement defining user's own wardrobe to choose from.
 """
-from random import choice
+from random import choice, randint
 from shirt_builders import ColouredShirtWithMarkAndTextBuilder, \
     ColouredShirtWithTextBuilder, ColouredShirtBuilder, \
     ColouredShirtWithMarkBuilder
+from shirt_decorators import Shirt, ConcreteFeatureColor, ConcreteFeatureMark, ConcreteFeatureText
 
 MONDAY_CHOICES = [['zieloną', 'niebieską', 'żółtą'],
                   ['słońcem', 'koniem', 'psem'],
@@ -42,7 +43,7 @@ def __get_final_input():
     day = __get_day()
     final_mark = __get_mark()
     final_text = __get_text()
-    final_color = __get_random_color(day)
+    final_color = get_random_color(day)
     final_mark = __get_random_mark(day) if final_mark else None
     final_text = __get_random_text(day) if final_text else None
     return final_color, final_mark, final_text
@@ -54,8 +55,7 @@ def __get_day() -> str:
         day = input('Jaki jest dzień tygodnia? ').casefold()
         if day in POLISH_DAYS:
             return day
-        else:
-            print('Nieprawidłowy wybór')
+        print('Nieprawidłowy wybór')
 
 
 def __get_mark() -> bool:
@@ -65,8 +65,7 @@ def __get_mark() -> bool:
                      'Wpisz Tak lub Nie: ').casefold()
         if mark in ('tak', 'nie'):
             return mark == 'tak'
-        else:
-            print('Nieprawidłowy wybór')
+        print('Nieprawidłowy wybór')
 
 
 def __get_text() -> bool:
@@ -76,11 +75,10 @@ def __get_text() -> bool:
                      'Wpisz Tak lub Nie: ').casefold()
         if text in ('tak', 'nie'):
             return text == 'tak'
-        else:
-            print('Nieprawidłowy wybór')
+        print('Nieprawidłowy wybór')
 
 
-def __get_random_color(day: str) -> str:
+def get_random_color(day: str) -> str:
     """Basing on a day chooses shirt's color from available ones"""
     if day == 'poniedziałek':
         result = choice(MONDAY_CHOICES[0])
@@ -137,29 +135,65 @@ def __get_random_text(day: str) -> str:
     return result
 
 
+def prompt_for_exit():
+    """Asks user if they want to quit program"""
+    choice_exit = input('Jeśli chcesz zakończyć wybierz 0, '
+                        'jeśli chcesz wybrać jeszcze raz - '
+                        'wciśnij dowolny inny przycisk i '
+                        'zatwierdź wciskając ENTER: ')
+    return choice_exit == '0'
+
+
 if __name__ == '__main__':
-    while True:
-        print('Witaj, na podstawie podanego dnia tygodnia '
-              'wybierzemy dla Ciebie koszulkę: ')
-        builder_color, builder_mark, builder_text = __get_final_input()
-        if builder_color and builder_mark and builder_text:
-            builder = ColouredShirtWithMarkAndTextBuilder(builder_color, builder_mark, builder_text)
-            builder.add_elements()
-            print(builder.result.description)
-        elif builder_color and builder_mark:
-            builder = ColouredShirtWithMarkBuilder(builder_color, builder_mark)
-            builder.add_elements()
-            print(builder.result.description)
-        elif builder_color and builder_text:
-            builder = ColouredShirtWithTextBuilder(builder_color, builder_text)
-            builder.add_elements()
-            print(builder.result.description)
-        else:
-            builder = ColouredShirtBuilder(builder_color)
-            builder.add_elements()
-            print(builder.result.description)
-        choice_exit = input('Jeśli chcesz zakończyć wybierz 0, '
-                       'jeśli chcesz wybrać jeszcze raz - '
-                       'wciśnij dowolny inny przycisk i zatwierdź wciskając ENTER: ')
-        if choice_exit == '0':
-            break
+    print('Witaj, na podstawie podanego dnia tygodnia '
+          'wybierzemy dla Ciebie koszulkę: ')
+    final_color_main, final_mark_main, final_text_main = __get_final_input()
+    pattern_random_selection = randint(1,2)
+    if pattern_random_selection == 1:
+        print('Używamy wzorca Builder :-)')
+        while True:
+            if final_color_main and final_mark_main and final_text_main:
+                builder = ColouredShirtWithMarkAndTextBuilder(final_color_main,
+                                                              final_mark_main,
+                                                              final_text_main)
+                builder.add_elements()
+                print(builder.result.description)
+            elif final_color_main and final_mark_main:
+                builder = ColouredShirtWithMarkBuilder(final_color_main,
+                                                       final_mark_main)
+                builder.add_elements()
+                print(builder.result.description)
+            elif final_color_main and final_text_main:
+                builder = ColouredShirtWithTextBuilder(final_color_main,
+                                                       final_text_main)
+                builder.add_elements()
+                print(builder.result.description)
+            else:
+                builder = ColouredShirtBuilder(final_color_main)
+                builder.add_elements()
+                print(builder.result.description)
+            if prompt_for_exit():
+                break
+    else:
+        print('Używamy wzorca Decorator :-)')
+        while True:
+            final_shirt = Shirt()
+            coloured_shirt = ConcreteFeatureColor(final_shirt, final_color_main)
+            if not final_mark_main and not final_text_main:
+                print(coloured_shirt.description)
+            elif not final_mark_main and final_text_main:
+                final_shirt_with_text = \
+                    ConcreteFeatureText(coloured_shirt, final_text_main)
+                print(final_shirt_with_text.description)
+            elif final_mark_main:
+                final_shirt_with_mark = \
+                    ConcreteFeatureMark(coloured_shirt, final_mark_main)
+                if final_text_main:
+                    final_shirt_with_mark_and_text = \
+                        ConcreteFeatureText(final_shirt_with_mark,
+                                            final_text_main)
+                    print(final_shirt_with_mark_and_text.description)
+                else:
+                    print(final_shirt_with_mark.description)
+            if prompt_for_exit():
+                break

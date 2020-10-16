@@ -24,11 +24,11 @@ class ShirtBuilder(ABC):
     """Abstract class for builders with methods to implement"""
     @abstractmethod
     def reset(self):
-        """Abstract method"""
+        """Abstract method for returning object to a basic form"""
 
     @abstractmethod
     def add_elements(self):
-        """Abstract method"""
+        """Abstract method to add appropriate elements"""
 
 
 class ColouredShirtBuilder(ShirtBuilder):

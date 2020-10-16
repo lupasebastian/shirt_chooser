@@ -4,14 +4,14 @@ Tests for builders classes
 from shirt_builders import Shirt
 
 
-def test_can_instantiate_shirt(base_shirt):
+def test_can_instantiate_shirt(base_shirt_for_builders):
     """Tests if a product can be instantiated"""
-    assert isinstance(base_shirt, Shirt)
+    assert isinstance(base_shirt_for_builders, Shirt)
 
 
-def test_can_get_shirts_description(base_shirt):
+def test_can_get_shirts_description(base_shirt_for_builders):
     """Tests if description property of a product can be accessed"""
-    assert base_shirt.description == 'Zwykła biała koszulka'
+    assert base_shirt_for_builders.description == 'Zwykła biała koszulka'
 
 
 def test_can_change_description_by_building(coloured_shirt_builder,
