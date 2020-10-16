@@ -4,5 +4,6 @@ The tool lets user decide what color of shirt they should wear and if they want 
 Then it proceeds to, basing on primary choices, get random color and/or mark and/or text on the shirt.
 First draft requires every user to have exactly the same wardrobe which may be a little inconvenient.
 Further releases will enable every user to configure their own wardrobe as a source of choices.
+Depending on a random choice - it implements Builder Design Pattern or Decorator Design Pattern.
 
 I hope you will all have fun using this powerful application.
